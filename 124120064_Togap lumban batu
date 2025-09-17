@@ -1,0 +1,91 @@
+def hitung_total(harga, jumlah, diskon=0):
+    """Menghitung total harga setelah diskon"""
+    subtotal = harga * jumlah
+    return subtotal - (subtotal * (diskon / 100)) if diskon > 0 else subtotal
+
+# Program utama
+if __name__ == "__main__":
+    try:
+        harga = float(input("Masukkan harga barang: "))
+        jumlah = int(input("Masukkan jumlah barang: "))
+        diskon_input = input("Masukkan diskon (%): ")
+
+        diskon = float(diskon_input) if diskon_input.strip() else 0
+
+        total = hitung_total(harga, jumlah, diskon)
+        print(f"Total belanja = {int(total)}")
+
+    except ValueError:
+        print("Error: Input tidak valid!")
+
+def hitung_total(harga, jumlah, diskon=0):
+    """
+    Menghitung total harga belanjaan dengan diskon.
+
+    Args:
+        harga: Harga per item (float/int)
+        jumlah: Jumlah barang (int)
+        diskon: Persentase diskon (float), default 0
+
+    Returns:
+        Total harga setelah diskon (float)
+
+    Raises:
+        ValueError: Jika input tidak valid
+    """
+    # Validasi input
+    if harga < 0 or jumlah < 0 or diskon < 0:
+        raise ValueError("Nilai tidak boleh negatif")
+
+    if diskon > 100:
+        raise ValueError("Diskon tidak boleh lebih dari 100%")
+
+    # Hitung total
+    subtotal = harga * jumlah
+
+    if diskon > 0:
+        potongan = subtotal * (diskon / 100)
+        return subtotal - potongan
+    else:
+        return subtotal
+
+def get_input(prompt, input_type=float, allow_empty=False):
+    """
+    Fungsi helper untuk mendapatkan input yang valid
+    """
+    while True:
+        try:
+            value = input(prompt).strip()
+
+            if allow_empty and value == "":
+                return 0
+
+            return input_type(value)
+        except ValueError:
+            print(f"Error: Masukkan {input_type.__name__} yang valid!")
+
+def main():
+    print("=== PROGRAM HITUNG TOTAL BELANJA ===")
+
+    # Input data
+    harga = get_input("Masukkan harga barang: ", float)
+    jumlah = get_input("Masukkan jumlah barang: ", int)
+    diskon = get_input("Masukkan diskon (%): ", float, allow_empty=True)
+
+    try:
+        # Hitung total
+        total = hitung_total(harga, jumlah, diskon)
+
+        # Tampilkan hasil
+        print("\n" + "="*30)
+        print(f"Harga barang: Rp {harga:,.0f}")
+        print(f"Jumlah barang: {jumlah}")
+        print(f"Diskon: {diskon}%")
+        print(f"Total belanja = Rp {total:,.0f}")
+        print("="*30)
+
+    except ValueError as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
