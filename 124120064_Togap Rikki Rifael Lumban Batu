@@ -1,0 +1,27 @@
+# konversi.py
+# Library konversi suhu buatan sendiri
+
+def c_to_f(c):
+    """Konversi Celcius ke Fahrenheit"""
+    return (c * 9/5) + 32
+
+def f_to_c(f):
+    """Konversi Fahrenheit ke Celcius"""
+    return (f - 32) * 5/9
+
+# main.py
+# Program utama untuk menggunakan library konversi.py
+
+import konversi
+
+# Meminta input suhu dalam Celcius
+c = float(input("Masukkan suhu Celcius: "))
+
+# Mengonversi ke Fahrenheit menggunakan fungsi dari library
+f = konversi.c_to_f(c)
+
+# Menampilkan hasil
+print(f"Suhu dalam Fahrenheit = {f}")
+
+Masukkan suhu Celcius: 30
+Suhu dalam Fahrenheit = 86.0
