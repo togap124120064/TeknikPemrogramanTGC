@@ -1,0 +1,63 @@
+#data_seismik.txt
+shot,receiver,twt
+0,100,200
+0,200,350
+0,300,480
+0,400,600
+
+#normalisasi_seismik.py
+import csv
+
+# Nama file input dan output
+input_file = "data_seismik.txt"
+output_file = "data_seismik_normalisasi.csv"
+
+# Struktur data untuk menyimpan hasil pembacaan
+data = []
+
+try:
+    # Membaca data dari file ASCII (comma separated)
+    with open(input_file, mode='r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            # Konversi nilai numerik
+            row['shot'] = int(row['shot'])
+            row['receiver'] = int(row['receiver'])
+            row['twt'] = float(row['twt'])
+            data.append(row)
+
+    # Ambil nilai minimum TWT
+    twt_values = [row['twt'] for row in data]
+    twt_min = min(twt_values)
+
+    # Normalisasi TWT dengan rumus (twt - twt_min) / (600 - twt_min)
+    for row in data:
+        try:
+            denominator = 600 - twt_min
+            if denominator == 0:
+                raise ZeroDivisionError("Nilai pembagi (600 - twt_min) = 0, tidak bisa dinormalisasi!")
+            row['twt_normalized'] = (row['twt'] - twt_min) / denominator
+        except Exception as e:
+            print(f"Error saat normalisasi data TWT {row['twt']}: {e}")
+            row['twt_normalized'] = None  # jika error, isi dengan None
+
+    # Simpan hasil ke file baru (ASCII/CSV)
+    with open(output_file, mode='w', newline='') as file:
+        fieldnames = ['shot', 'receiver', 'twt', 'twt_normalized']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(data)
+
+    print(f"✅ Data berhasil dinormalisasi dan disimpan ke '{output_file}'")
+
+except FileNotFoundError:
+    print(f"❌ File '{input_file}' tidak ditemukan.")
+except Exception as e:
+    print(f"❌ Terjadi kesalahan: {e}")
+
+#data_seismik_normalisasi.csv
+shot,receiver,twt,twt_normalized
+0,100,200,0.0
+0,200,350,0.3
+0,300,480,0.56
+0,400,600,0.8
