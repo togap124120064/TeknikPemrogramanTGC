@@ -1,0 +1,18 @@
+# Program Menghitung Usia Rata-rata Keluarga
+
+# Meminta jumlah anggota keluarga
+jumlah = int(input("Masukkan jumlah anggota keluarga: "))
+
+# List untuk menyimpan usia setiap anggota
+usia_keluarga = []
+
+# Meminta input usia masing-masing anggota
+for i in range(jumlah):
+    usia = float(input(f"Masukkan usia anggota ke-{i+1}: "))
+    usia_keluarga.append(usia)
+
+# Menghitung rata-rata usia
+rata_rata = sum(usia_keluarga) / jumlah
+
+# Menampilkan hasil
+print(f"\nUsia rata-rata keluarga adalah: {rata_rata:.2f} tahun")
