@@ -1,0 +1,18 @@
+username = "admin"
+password = "12345"
+
+percobaan = 0
+while percoban < 3:
+  user = input("username: ")
+  pw = input("password: ")
+
+if user == username and pw == password:
+   print("login berhasil")
+   break
+   
+ else:
+    print("username atau password salah.")
+    percobaan += 1
+
+if percobaan == 3:
+  print("Akun terkunci karena 3x gagal login.")
